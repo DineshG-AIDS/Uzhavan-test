@@ -29,7 +29,7 @@ const CartScreen = () => {
   };
 
   const checkOutHandler = () => {
-    navigate("/login?redirect=/shpping");
+    navigate("/login?redirect=/shipping");
   };
 
   return (
