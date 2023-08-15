@@ -43,8 +43,6 @@ const ProfileScreen = () => {
   ] = useProfileMutation();
 
   const { data: orders, isLoading, error } = useGetMyOrdersQuery();
-  // console.log(orders);
-  // console.log(error);
 
   useEffect(() => {
     setName(userInfo.name);
@@ -134,6 +132,20 @@ const ProfileScreen = () => {
                       ) : (
                         <FaTimes style={{ color: "red" }} />
                       )}
+                    </td>
+                    <td>
+                      {order.isDelevered ? (
+                        order.deliveredvAt.substring(0, 10)
+                      ) : (
+                        <FaTimes style={{ color: "red" }} />
+                      )}
+                    </td>
+                    <td>
+                      <LinkContainer to={`/order/${order._id}`}>
+                        <Button className="btn-sm" variant="ligth">
+                          Details
+                        </Button>
+                      </LinkContainer>
                     </td>
                   </tr>
                 ))
