@@ -1,4 +1,4 @@
-import { json } from "express";
+// import { json } from "express";
 import asyncHandler from "../middleware/asynHandler.js";
 import Order from "../models/orderModel.js";
 const addOrderItems = asyncHandler(async (req, res) => {
@@ -63,11 +63,27 @@ const getOrderById = asyncHandler(async (req, res) => {
 });
 
 //update order to paid
-//GET REQ
+//PUT REQ
 //PRIVATE
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  res.send("Update Order to paid");
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.paymentResult = {
+      id: req.body.id,
+      status: req.body.status,
+      update_time: req.body.update_time,
+      email_address: req.body.payer?.email_address,
+    };
+    //Update the payment result of this order and save it
+    const updateOrder = await order.save();
+    res.status(200).json(updateOrder);
+  } else {
+    res.status(404);
+    throw new Error("No such order");
+  }
 });
 
 //update order to delivered
@@ -83,7 +99,8 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 //PRIVATE/ADMIN
 
 const getOrders = asyncHandler(async (req, res) => {
-  res.send("get orders only admins");
+  const orders = await Order.find({}).populate("user", "id name");
+  res.json(orders);
 });
 
 export {
