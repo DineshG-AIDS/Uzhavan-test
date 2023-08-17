@@ -10,6 +10,7 @@ import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useDeliveredOrderMutation,
 } from "../slices/OrderApiSlice";
 
 const OrderScreen = () => {
@@ -18,6 +19,11 @@ const OrderScreen = () => {
   const { data: order, refetch, isLoading, erorr } = useGetOrderDetailsQuery(
     orderId
   );
+
+  const [
+    deliverOrder,
+    { isLoading: loadingDeliver },
+  ] = useDeliveredOrderMutation();
 
   const [payOrder, { isLoading: LoadingPay }] = usePayOrderMutation();
 
@@ -89,6 +95,15 @@ const OrderScreen = () => {
   }
 
   // console.log(order);
+  const delivereOrderHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success("Order Delivered");
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
+  };
 
   return isLoading ? (
     <Loader />
@@ -115,7 +130,7 @@ const OrderScreen = () => {
               {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
               {order.shippingAddress.postalCode},{order.shippingAddress.country}{" "}
             </p>
-            {order.isDelevered ? (
+            {order.isDelivered ? (
               <Message variants="success">
                 Deliverd on {order?.deliveredAt}
               </Message>
@@ -203,6 +218,21 @@ const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
+              {loadingDeliver && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type="button"
+                      className="btn btn-block"
+                      onClick={delivereOrderHandler}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
