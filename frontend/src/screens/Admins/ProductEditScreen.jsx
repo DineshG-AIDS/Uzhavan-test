@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import {
   useUpdateProductMutation,
   useGetProductDetailsQuery,
+  useUploadProductsImageMutation,
 } from "../../slices/productsApiSlice";
 
 const ProductEditScreen = () => {
@@ -27,11 +28,16 @@ const ProductEditScreen = () => {
     error,
   } = useGetProductDetailsQuery(productId);
 
-  console.log(Product);
+  // console.log(Product);
   const [
     updateProduct,
     { isLoading: loadingUpdate },
   ] = useUpdateProductMutation();
+
+  const [
+    uploadProductImages,
+    { isLoading: loadingUploads },
+  ] = useUploadProductsImageMutation();
 
   const navigate = useNavigate();
 
@@ -50,7 +56,7 @@ const ProductEditScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     const updatedProduct = {
-      _id: productId,
+      productId,
       name,
       price,
       image,
@@ -65,6 +71,18 @@ const ProductEditScreen = () => {
     } else {
       toast.success("product added");
       navigate("/admin/productlist");
+    }
+  };
+
+  const UploadFileHnadler = async (e) => {
+    const formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    try {
+      const res = await uploadProductImages(formData).unwrap();
+      toast.success(res.messge);
+      setImage(res.image);
+    } catch (err) {
+      toast.error(err?.data?.messge || err.error);
     }
   };
 
@@ -103,7 +121,20 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            {/* {image input} */}
+            <Form.Group controlId="image" className="my-2">
+              <Form.Label>Images</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Image URL"
+                value={image}
+                onChange={(e) => setImage}
+              ></Form.Control>
+              <Form.Control
+                type="file"
+                lable="Choose File"
+                onChange={UploadFileHnadler}
+              ></Form.Control>
+            </Form.Group>
 
             <Form.Group controlId="brand" className="my-2">
               <Form.Label>Brand :</Form.Label>
