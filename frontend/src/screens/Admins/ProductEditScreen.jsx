@@ -12,138 +12,139 @@ import {
 
 const ProductEditScreen = () => {
   const { id: productId } = useParams();
-
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
-  const [countInStock, setCountInStock] = useState(0);
-  const [description, setDescription] = useState("");
+  const [countInStock, setcountInStock] = useState(0);
+  const [description, setdescription] = useState("");
 
   const {
-    data: product,
+    data: Product,
     isLoading,
     refetch,
     error,
   } = useGetProductDetailsQuery(productId);
-  //   console.log(product);
 
+  console.log(Product);
   const [
     updateProduct,
     { isLoading: loadingUpdate },
   ] = useUpdateProductMutation();
-  //   console.log(updateProduct);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (product) {
-      setName(product.name);
-      setPrice(product.price);
-      setImage(product.image);
-      setBrand(product.brand);
-      setCategory(product.category);
-      setCountInStock(product.countInStock);
-      setDescription(product.description);
+    if (Product) {
+      setName(Product.name);
+      setPrice(Product.price);
+      setImage(Product.image);
+      setBrand(Product.brand);
+      setCategory(Product.category);
+      setcountInStock(Product.countInStock);
+      setdescription(Product.description);
     }
-  }, [product]);
+  }, [Product]);
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("submted");
+    const updatedProduct = {
+      _id: productId,
+      name,
+      price,
+      image,
+      brand,
+      category,
+      countInStock,
+      description,
+    };
+    const result = await updateProduct(updatedProduct);
+    if (result.error) {
+      toast.error(result.error);
+    } else {
+      toast.success("product added");
+      navigate("/admin/productlist");
+    }
   };
 
   return (
     <>
       <Link to="/admin/productlist" className="btn btn-light my-3">
-        Go back
+        Go Back
       </Link>
       <FormContainer>
         <h1>Edit Products</h1>
         {loadingUpdate && <Loader />}
+
         {isLoading ? (
           <Loader />
         ) : error ? (
-          <Message variant="danger">{error.data.message}</Message>
+          <Message variants="danger">{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name" className="my-2">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Name:</Form.Label>
               <Form.Control
-                type="name"
-                placeholder="Enter name"
+                type="text"
+                placeholder="Enter Your Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="price" className="my-2">
-              <Form.Label>Price</Form.Label>
+              <Form.Label>Price : </Form.Label>
               <Form.Control
                 type="number"
-                placeholder="Enter price"
+                placeholder="Enter Your Price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
-            {/* <Form.Group controlId="image" className="my-2">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter image url"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.Control label="Choose File" type="file"></Form.Control>
-            
-            </Form.Group> */}
+            {/* {image input} */}
 
             <Form.Group controlId="brand" className="my-2">
-              <Form.Label>Brand</Form.Label>
+              <Form.Label>Brand :</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter brand"
+                placeholder="Enter Brand"
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="countInStock" className="my-2">
-              <Form.Label>Count In Stock</Form.Label>
+              <Form.Label>Count In Stock:</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="Enter countInStock"
+                placeholder="Enter Stocks"
                 value={countInStock}
-                onChange={(e) => setCountInStock(e.target.value)}
+                onChange={(e) => setcountInStock(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="category" className="my-2">
-              <Form.Label>Category</Form.Label>
+              <Form.Label>Category:</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter category"
+                placeholder="Enter Category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="description" className="my-2">
-              <Form.Label>Description</Form.Label>
+              <Form.Label>Description:</Form.Label>
               <Form.Control
-                type="textarea"
-                placeholder="Enter description"
+                type="text"
+                placeholder="Enter Description"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setdescription(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
-            <Button
-              type="submit"
-              variant="primary"
-              style={{ marginTop: "1rem" }}
-            >
+            <Button type="submit" variant="primary" className="my-2">
               Update
             </Button>
           </Form>

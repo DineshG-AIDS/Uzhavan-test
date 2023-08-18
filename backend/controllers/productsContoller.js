@@ -45,7 +45,6 @@ const updateProduct = asyncHandler(async (req, res) => {
   } = req.body;
 
   const product = await productsModel.findById(req.params.id);
-  // console.log(product);
 
   if (product) {
     product.name = name;
@@ -60,7 +59,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     res.json(updatedProduct);
   } else {
     res.status(404);
-    throw new Error("Product not found");
+    throw new Error("resource not found");
   }
 });
 
