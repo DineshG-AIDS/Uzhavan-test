@@ -2,7 +2,7 @@ import asyncHandler from "../middleware/asynHandler.js";
 import productsModel from "../models/productsModel.js";
 
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 8;
+  const pageSize = process.env.PAGE_LIMIT;
   const page = Number(req.query.pageNumber) || 1;
 
   const keyword = req.query.keyword
