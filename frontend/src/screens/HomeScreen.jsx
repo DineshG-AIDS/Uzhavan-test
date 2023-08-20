@@ -6,7 +6,7 @@ import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { error } from "jquery";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
 
 const HomeScreen = () => {
@@ -19,6 +19,11 @@ const HomeScreen = () => {
 
   return (
     <>
+      {keyword && (
+        <Link to="/" className="btn btn-ligth mb-4">
+          Go back
+        </Link>
+      )}
       {isLoading ? (
         <Loader />
       ) : isError ? (
