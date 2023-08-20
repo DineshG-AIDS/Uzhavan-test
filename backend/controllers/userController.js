@@ -111,28 +111,61 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 //ALL USER ONLY OFR ADMINS
 
 const getUserByid = asyncHandler(async (req, res) => {
-  res.send("get  users by id");
+  const usersid = await userModel.findById(req.params.id).select("-password");
+  if (usersid) {
+    res.status(200).json(usersid);
+  } else {
+    res.status(404);
+    throw new Error("No Such User Found");
+  }
 });
 
 //GET REQ
 //ALL USER ONLY OFR ADMINS
 
 const getUser = asyncHandler(async (req, res) => {
-  res.send("get all users");
+  const users = await userModel.find({});
+  res.status(200).json(users);
 });
 
 //DELETE REQ
 // DELETE A SPECIFIC USER BY ID FOR ADMINS
 
 const deleteUser = asyncHandler(async (req, res) => {
-  res.send("delete user");
+  const usersD = await userModel.findById(req.params.id);
+  if (usersD) {
+    if (usersD.isAdmin) {
+      res.status(400);
+      throw new Error("cannot delete Admin");
+    }
+    await userModel.deleteOne({ _id: usersD._id });
+    res.status(200).json({ message: "USer DEleted Successfully" });
+  } else {
+    res.status(404);
+    throw new Error("user not found");
+  }
 });
 
 //PUT REQ
 //ADMINS UPDATE ALL USER
 
 const upateUser = asyncHandler(async (req, res) => {
-  res.send("update users");
+  const user = await userModel.findById(req.params.id);
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = Boolean(req.body.isAdmin);
+    const updatedUser = await user.save();
+    res.status(200).json({
+      _id: upateUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User NOt found in user controler line 168");
+  }
 });
 
 export {
