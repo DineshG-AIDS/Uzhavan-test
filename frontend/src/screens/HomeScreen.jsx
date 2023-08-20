@@ -6,9 +6,13 @@ import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { error } from "jquery";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { useParams } from "react-router-dom";
+import Paginate from "../components/Paginate";
 
 const HomeScreen = () => {
-  const { data: Products, isLoading, isError } = useGetProductsQuery();
+  const { pageNumber } = useParams();
+  const { data, isLoading, isError } = useGetProductsQuery({ pageNumber });
+  // console.log(data);
 
   return (
     <>
@@ -22,12 +26,13 @@ const HomeScreen = () => {
         <>
           <h1>Fresh Products</h1>
           <Row>
-            {Products.map((product) => (
+            {data.products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                 <Products1 product={product} />
               </Col>
             ))}
           </Row>
+          <Paginate pages={data.pages} page={data.page} />
         </>
       )}
     </>
