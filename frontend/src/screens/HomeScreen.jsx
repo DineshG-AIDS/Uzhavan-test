@@ -9,6 +9,7 @@ import Message from "../components/Message";
 import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
 import ProductsCarosel from "../components/ProductsCarosel";
+import Meta from "../components/Meta";
 
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
@@ -35,6 +36,7 @@ const HomeScreen = () => {
         </Message>
       ) : (
         <>
+          <Meta title="Welcome to Uzhavan" />
           <h1>Fresh Products</h1>
           <Row>
             {data.products.map((product) => (

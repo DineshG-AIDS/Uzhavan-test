@@ -1,6 +1,6 @@
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Row, Col } from "react-bootstrap";
-import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 const ProductListScreen = () => {
   const { pageNumber } = useParams();
   const { data, isLoading, error, refetch } = useGetProductsQuery({
-    pageNumber: 1,
+    pageNumber,
   });
   // console.log(data);
   const [

@@ -24,7 +24,7 @@ const ProductEditScreen = () => {
   const {
     data: Product,
     isLoading,
-    refetch,
+    
     error,
   } = useGetProductDetailsQuery(productId);
 
@@ -135,6 +135,7 @@ const ProductEditScreen = () => {
                 onChange={UploadFileHnadler}
               ></Form.Control>
             </Form.Group>
+            {loadingUploads && <Loader />}
 
             <Form.Group controlId="brand" className="my-2">
               <Form.Label>Brand :</Form.Label>
