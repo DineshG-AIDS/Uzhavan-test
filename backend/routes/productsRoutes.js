@@ -4,6 +4,7 @@ import {
   getProductId,
   createProduct,
   updateProduct,
+  deleteProduct,
 } from "../controllers/productsContoller.js";
 import { protect } from "../middleware/authMiddleWare.js";
 import { admin } from "../middleware/authMiddleWare.js";
@@ -17,6 +18,7 @@ router
 router
   .route("/:id")
   .get(getProductId)
-  .put(protect, admin, updateProduct);
+  .put(protect, admin, updateProduct)
+  .delete(protect, admin, deleteProduct);
 
 export default router;
