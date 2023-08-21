@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Badge, Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { FaCartPlus, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
@@ -44,6 +44,7 @@ const Header = () => {
               Uzhavan
             </Navbar.Brand>
           </LinkContainer>
+
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">

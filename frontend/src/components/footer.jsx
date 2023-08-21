@@ -7,7 +7,13 @@ const footer = () => {
       <Container>
         <Row>
           <Col className="text-center py-3">
-            <p>Uzhavan &copy; {currentYear}</p>
+            <a
+              className="buddy3"
+              target="blank"
+              href="https://dineshg-aids.github.io/teamlearners/"
+            >
+              Uzhavan &copy; {currentYear}
+            </a>
           </Col>
         </Row>
       </Container>

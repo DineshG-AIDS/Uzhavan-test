@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 // import { useEffect, useState } from "react";
 import Products1 from "../components/Products";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
-// import { error } from "jquery";
+import { error } from "jquery";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Link, useParams } from "react-router-dom";
@@ -21,6 +21,13 @@ const HomeScreen = () => {
 
   return (
     <>
+      <a
+        href="https://dineshg-aids.github.io/loginscreen/"
+        target="blank"
+        className="buddy"
+      >
+        click here to Register as Farmer 🚀
+      </a>{" "}
       {!keyword ? (
         <ProductsCarosel />
       ) : (
@@ -32,11 +39,12 @@ const HomeScreen = () => {
         <Loader />
       ) : isError ? (
         <Message variants="danger">
-          {isError?.data?.message || isError.error}
+          {/* {error?.data?.message || error.error} */}
         </Message>
       ) : (
         <>
           <Meta title="Welcome to Uzhavan" />
+
           <h1>Fresh Products</h1>
           <Row>
             {data.products.map((product) => (

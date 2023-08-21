@@ -19,6 +19,7 @@ const ProductsCarosel = () => {
           <div className="center">
             {" "}
             <Image src={product.image} fluid />
+            {/* <Image src="images/farm.jep" /> */}
           </div>
           <Carousel.Caption className="carousel-caption">
             <h2>

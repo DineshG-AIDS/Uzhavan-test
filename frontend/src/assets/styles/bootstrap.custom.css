@@ -1,9 +1,3 @@
-@charset "UTF-8";
-/*!
- * Bootstrap  v5.3.0-alpha1 (https://getbootstrap.com/)
- * Copyright 2011-2022 The Bootstrap Authors
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
 ::-webkit-scrollbar {
   display: none;
 }
@@ -228,6 +222,13 @@ hr {
   border-top: var(--bs-border-width) solid;
   opacity: 0.25;
 }
+.buddy {
+  font-size: 1rem;
+  text-decoration: none;
+  font-family: ff2;
+  /* color: #13967d; */
+  color: #63c71f;
+}
 
 h6,
 .h6,
@@ -304,12 +305,9 @@ h6,
   font-size: 1rem;
 }
 
-p {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-family: ff8;
-  font-weight: 1000;
-  font-size: 1.5rem;
+.buddy3 {
+  text-decoration: none;
+  color: #f2f8ee;
 }
 
 abbr[title] {
@@ -4583,6 +4581,7 @@ fieldset:disabled .btn {
 
 .card-text:last-child {
   margin-bottom: 0;
+  color: #0c0f13;
 }
 
 .card-link + .card-link {

@@ -19,7 +19,7 @@ import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
 } from "../slices/productsApiSlice";
-// import { error } from "jquery";
+import { error } from "jquery";
 import Message from "../components/Message";
 import { addToCart } from "../slices/cartSlice";
 import { toast } from "react-toastify";
@@ -78,12 +78,11 @@ const ProductScreen = () => {
       <Link className="btn btn-dark my-3 " to="/">
         Go Back
       </Link>
-
       {isLoading ? (
         <Loader />
       ) : isError ? (
         <Message variants="danger">
-          {isError?.data?.message || isError.error}
+          {error?.data?.message || error.error}
         </Message>
       ) : (
         <>
