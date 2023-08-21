@@ -32,7 +32,7 @@ const HomeScreen = () => {
         <Loader />
       ) : isError ? (
         <Message variants="danger">
-          {error?.data?.message || error.error}
+          {isError?.data?.message || isError.error}
         </Message>
       ) : (
         <>
