@@ -19,7 +19,7 @@ import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
 } from "../slices/productsApiSlice";
-import { error } from "jquery";
+// import { error } from "jquery";
 import Message from "../components/Message";
 import { addToCart } from "../slices/cartSlice";
 import { toast } from "react-toastify";
