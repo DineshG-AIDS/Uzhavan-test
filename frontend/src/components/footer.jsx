@@ -8,9 +8,9 @@ const footer = () => {
         <Row>
           <Col className="text-center py-3">
             <a
-              className="buddy3"
-              target="blank"
               href="https://dineshg-aids.github.io/teamlearners/"
+              target="blank"
+              className="buddy3"
             >
               Uzhavan &copy; {currentYear}
             </a>
