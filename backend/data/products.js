@@ -1,6 +1,6 @@
 const products = [
   {
-    name: "Farimg Product 1",
+    name: "Tomato",
     image: "/images/farm1.jpeg",
     description:
       "Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working",

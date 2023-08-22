@@ -91,6 +91,9 @@ const RegisterScreen = () => {
             onChange={(e) => setConfrimPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
+        <Form.Group>
+          <h4>Please use same email as in Farmer portal</h4>
+        </Form.Group>
 
         <Button disabled={isLoading} type="submit" variant="primary">
           Register
@@ -105,6 +108,12 @@ const RegisterScreen = () => {
           <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
             Login
           </Link>
+        </Col>
+        <Col>
+          Register as Farmer{" "}
+          <a href="https://dineshg-aids.github.io/loginscreen/" target="blank">
+            Link
+          </a>
         </Col>
       </Row>
     </FormContainer>

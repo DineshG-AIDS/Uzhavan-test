@@ -93,7 +93,7 @@ const ProductListScreen = () => {
                   <td>
                     <LinkContainer to={`/admin/products/${product._id}/edit`}>
                       <Button variant="light" className="btn-sm mx-2">
-                        <FaEdit style={{ color: "#63c71f" }} />
+                        <FaEdit style={{ color: "#66bb6a" }} />
                       </Button>
                     </LinkContainer>
                     <Button

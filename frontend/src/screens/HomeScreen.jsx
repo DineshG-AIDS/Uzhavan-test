@@ -6,6 +6,7 @@ import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { error } from "jquery";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
 import ProductsCarosel from "../components/ProductsCarosel";
@@ -17,17 +18,26 @@ const HomeScreen = () => {
     keyword,
     pageNumber,
   });
+  const { userInfo } = useSelector((state) => state.user);
+
   // console.log(data);
 
   return (
     <>
-      <a
-        href="https://dineshg-aids.github.io/loginscreen/"
-        target="blank"
-        className="buddy"
-      >
-        click here to Register as Farmer 🚀
-      </a>{" "}
+      {userInfo.isAdmin ? (
+        <div className="text-center">
+          <a
+            href="https://dineshg-aids.github.io/loginscreen/"
+            target="blank"
+            className="buddy"
+          >
+            click here to Register as Farmer 🚀
+          </a>
+        </div>
+      ) : (
+        ""
+      )}
+
       {!keyword ? (
         <ProductsCarosel />
       ) : (

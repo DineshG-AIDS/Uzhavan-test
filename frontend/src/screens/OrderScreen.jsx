@@ -161,7 +161,7 @@ const OrderScreen = () => {
                       <Link to={`/product/${item.product}`}>{item.name}</Link>
                     </Col>
                     <Col md={4}>
-                      {item.qty} X ${item.price} = ${item.qty * item.price}
+                      {item.qty} X ₹{item.price} = ₹{item.qty * item.price}
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -179,19 +179,19 @@ const OrderScreen = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${order.itemsPrice}</Col>
+                  <Col>₹{order.itemsPrice}</Col>
                 </Row>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${order.shippingPrice}</Col>
+                  <Col>₹{order.shippingPrice}</Col>
                 </Row>
                 <Row>
                   <Col>Tax </Col>
-                  <Col>${order.taxPrice}</Col>
+                  <Col>₹{order.taxPrice}</Col>
                 </Row>
                 <Row>
                   <Col>Total</Col>
-                  <Col>${order.totalPrice}</Col>
+                  <Col>₹{order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
               {!order.isPaid && (
