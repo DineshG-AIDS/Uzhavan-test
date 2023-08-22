@@ -20,23 +20,19 @@ const HomeScreen = () => {
   });
   const { userInfo } = useSelector((state) => state.user);
 
-  // console.log(data);
+  console.log(userInfo);
 
   return (
     <>
-      {userInfo.isAdmin ? (
-        <div className="text-center">
-          <a
-            href="https://dineshg-aids.github.io/loginscreen/"
-            target="blank"
-            className="buddy"
-          >
-            click here to Register as Farmer 🚀
-          </a>
-        </div>
-      ) : (
-        ""
-      )}
+      <div className="text-center">
+        <a
+          href="https://dineshg-aids.github.io/loginscreen/"
+          target="blank"
+          className="buddy"
+        >
+          click here to Register as Farmer 🚀
+        </a>
+      </div>
 
       {!keyword ? (
         <ProductsCarosel />
@@ -55,7 +51,7 @@ const HomeScreen = () => {
         <>
           <Meta title="Welcome to Uzhavan" />
 
-          <h1>Fresh Products</h1>
+          <h1>Hand picked products {userInfo ? `for ${userInfo.name}` : ""}</h1>
           <Row>
             {data.products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
