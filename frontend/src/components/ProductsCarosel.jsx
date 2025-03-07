@@ -10,17 +10,18 @@ const ProductsCarosel = () => {
   return isLoading ? (
     <Loader />
   ) : error ? (
-    <Message variants="danger">{error}</Message>
-  ) : (
+    <Message variants="danger">
+      {error?.data?.message || error?.error || "An error occurred"}
+    </Message>
+  ) : products?.length > 0 ? (
     <Carousel pause="hover" className="bg-primary my-4">
       {products.map((product) => (
         <Carousel.Item key={product._id}>
-          <Link to={`/product/${product._id}`}></Link>
-          <div className="center">
-            {" "}
-            <Image src={product.image} fluid />
-            {/* <Image src="images/farm.jep" /> */}
-          </div>
+          <Link to={`/product/${product._id}`}>
+            <div className="center">
+              <Image src={product.image} fluid />
+            </div>
+          </Link>
           <Carousel.Caption className="carousel-caption">
             <h2>
               {product.name} ₹({product.price})
@@ -29,6 +30,8 @@ const ProductsCarosel = () => {
         </Carousel.Item>
       ))}
     </Carousel>
+  ) : (
+    <Message variants="info">No top products available</Message>
   );
 };
 

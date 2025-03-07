@@ -29,10 +29,11 @@ const getProductId = asyncHandler(async (req, res) => {
 });
 
 const createProduct = asyncHandler(async (req, res) => {
+  console.log(req.user);
   const product = new productsModel({
     name: "Sample Name",
     price: 0,
-    user: req.user._id,
+    user: "67caa57fac27a41949bfec91",
     image: "images/sample.jpg",
     brand: "Sample Brand",
     category: "Sample Category",
@@ -45,15 +46,8 @@ const createProduct = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const {
-    name,
-    price,
-    description,
-    image,
-    brand,
-    category,
-    countInStock,
-  } = req.body;
+  const { name, price, description, image, brand, category, countInStock } =
+    req.body;
 
   const product = await productsModel.findById(req.params.id);
 
@@ -87,9 +81,8 @@ const deleteProduct = asyncHandler(async (req, res) => {
 });
 
 const createProductReview = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
+  const { rating, comment, name, id } = req.body;
   const product = await productsModel.findById(req.params.id);
-
   if (product) {
     const alreadyReviewed = product.reviews.find(
       (review) => review.user.toString() === req.user._id.toString()
@@ -99,10 +92,10 @@ const createProductReview = asyncHandler(async (req, res) => {
       throw new Error("You have already reviewed this Product");
     }
     const review = {
-      name: req.user.name,
+      name,
       rating: Number(rating),
       comment,
-      user: req.user._id,
+      user: id,
     };
 
     product.reviews.push(review);
@@ -120,10 +113,7 @@ const createProductReview = asyncHandler(async (req, res) => {
 });
 
 const getTopProducts = asyncHandler(async (req, res) => {
-  const products = await productsModel
-    .find({})
-    .sort({ rating: -1 })
-    .limit(3);
+  const products = await productsModel.find({}).sort({ rating: -1 }).limit(3);
   res.status(200).json(products);
 });
 

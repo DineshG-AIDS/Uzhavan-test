@@ -28,24 +28,26 @@ const authUser = asyncHandler(async (req, res) => {
 // Register User
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
-  const userExit = await User.findOne({ email });
-  if (userExit) {
+  const { name, email, password, isAdmin } = req.body; 
+  const userExists = await User.findOne({ email });
+  if (userExists) {
     res.status(400);
-    throw new Error("User ALready Exits");
+    throw new Error("User Already Exists");
   }
   const user = await User.create({
     name,
     email,
     password,
+    isAdmin: isAdmin || false, // <-- Ensure isAdmin is passed
   });
+
   if (user) {
-    generateToken(res, user._id);
+    console.log(user);
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      isAdmin: user.isAdmin, // Should now be correct
     });
   } else {
     res.status(400);

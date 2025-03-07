@@ -3,7 +3,6 @@ import { Row, Col } from "react-bootstrap";
 // import { useEffect, useState } from "react";
 import Products1 from "../components/Products";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
-import { error } from "jquery";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useSelector } from "react-redux";

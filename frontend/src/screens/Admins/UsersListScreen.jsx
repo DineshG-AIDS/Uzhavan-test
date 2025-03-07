@@ -1,6 +1,5 @@
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
-
 import { FaTrash, FaTimes, FaEdit, FaCheck } from "react-icons/fa";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
@@ -12,31 +11,33 @@ import {
 
 const UserListScreen = () => {
   const { data: users, refetch, isLoading, error } = useGetUsersQuery();
-  const [deleteUser, { isLoading: loadingDelte }] = useDeleteUserMutation();
+  const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
 
   const deleteHandler = async (id) => {
-    // e.preventDefault();
-    if (window.confirm("Are You Sure Want to delete user")) {
+    if (window.confirm("Are you sure you want to delete this user?")) {
       try {
         await deleteUser(id);
         refetch();
-        toast.success("user deleted successfully");
+        toast.success("User deleted successfully");
       } catch (err) {
-        toast.error(err?.data?.message || err.error);
+        toast.error(err?.data?.message || err.error || "An error occurred");
       }
     }
   };
-  // console.log(orders);
+
+  console.log("Error Object:", error); // Debugging error object
 
   return (
     <>
       <h1>Users</h1>
-      {loadingDelte && <Loader />}
+      {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variants="danger">{error}</Message>
-      ) : (
+        <Message variants="danger">
+          {error?.data?.message || error?.error || "An error occurred"}
+        </Message>
+      ) : users?.length > 0 ? (
         <Table striped bordered hover responsive className="table-sm">
           <thead>
             <tr>
@@ -44,8 +45,7 @@ const UserListScreen = () => {
               <th>NAME</th>
               <th>EMAIL</th>
               <th>ADMIN</th>
-
-              <th></th>
+              <th>ACTIONS</th>
             </tr>
           </thead>
           <tbody>
@@ -56,7 +56,6 @@ const UserListScreen = () => {
                 <td>
                   <a href={`mailto:${user.email}`}>{user.email}</a>
                 </td>
-
                 <td>
                   {user.isAdmin ? (
                     <FaCheck style={{ color: "green" }} />
@@ -64,10 +63,9 @@ const UserListScreen = () => {
                     <FaTimes style={{ color: "red" }} />
                   )}
                 </td>
-
                 <td>
                   <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                    <Button variant="ligth" className="btn-sm">
+                    <Button variant="light" className="btn-sm">
                       <FaEdit />
                     </Button>
                   </LinkContainer>
@@ -83,6 +81,8 @@ const UserListScreen = () => {
             ))}
           </tbody>
         </Table>
+      ) : (
+        <Message variants="info">No users found</Message>
       )}
     </>
   );

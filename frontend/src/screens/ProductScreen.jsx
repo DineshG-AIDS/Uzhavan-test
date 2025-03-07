@@ -19,7 +19,6 @@ import {
   useGetProductDetailsQuery,
   useCreateReviewMutation,
 } from "../slices/productsApiSlice";
-import { error } from "jquery";
 import Message from "../components/Message";
 import { addToCart } from "../slices/cartSlice";
 import { toast } from "react-toastify";
@@ -43,7 +42,7 @@ const ProductScreen = () => {
   } = useGetProductDetailsQuery(productId);
 
   const { userInfo } = useSelector((state) => state.user);
-
+  console.log(userInfo)
   const [
     createReview,
     { isLoading: loadingProductReview },
@@ -63,6 +62,9 @@ const ProductScreen = () => {
         productId,
         rating,
         comment,
+        name: product?.name,
+        id: userInfo?._id
+
       }).unwrap();
       refetch();
       toast.success("Your review has been submitted successfully");
@@ -82,7 +84,6 @@ const ProductScreen = () => {
         <Loader />
       ) : isError ? (
         <Message variants="danger">
-          {error?.data?.message || error.error}
         </Message>
       ) : (
         <>
