@@ -1,5 +1,6 @@
 import path from "path";
 import express from "express";
+import cors from "cors"; // Import CORS
 import productsRoutes from "./routes/productsRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
@@ -15,15 +16,18 @@ connectDB();
 
 const app = express();
 
-//BODY PARSER MIDDLEWARE
-app.use(express.json()); // for parsing application/json
+// Enable CORS for all origins
+app.use(cors({ origin: "*", credentials: true }));
+
+// Body Parser Middleware
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Cookie parser pakage intialzer
+// Cookie Parser Middleware
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.send("Hello jeevan");
+  res.send("Hello Jeevan");
 });
 
 app.use("/api/products", productsRoutes);
@@ -34,9 +38,10 @@ app.use("/api/upload", updlodRoutes);
 app.get("/api/config/paypal", (req, res) =>
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
 );
-const __dirname = path.resolve();
 
+const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/build")));
   app.get("*", (req, res) =>
@@ -45,13 +50,14 @@ if (process.env.NODE_ENV === "production") {
 } else {
   app.get("/", (req, res) => {
     res.send(
-      "Uzavan api is running succesfully The Team Learners ARAGANATHAN DINESH HARIHARAN JEEVANPRASATH"
+      "Uzavan API is running successfully. The Team: Learners ARAGANATHAN DINESH HARIHARAN JEEVANPRASATH"
     );
   });
 }
+
 app.use(notFound);
 app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`Api is Running on ${port}`);
+  console.log(`API is Running on port ${port}`);
 });
